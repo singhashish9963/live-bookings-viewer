@@ -1,0 +1,230 @@
+/* frontend/style.css - Reverted to a previous, simpler UI with Confirmation styles */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f4f4f4; /* Simple background */
+    color: #333;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centering content horizontally */
+    min-height: 100vh; /* Ensure body takes full viewport height */
+    box-sizing: border-box;
+}
+
+h1 {
+    color: #0056b3;
+    text-align: center;
+    margin-top: 50px; /* Space for fixed status indicator */
+    margin-bottom: 20px;
+    font-size: 2.5em;
+    font-weight: 600;
+    width: 100%;
+    max-width: 600px; /* Limit width */
+}
+
+/* Status Indicator Styles */
+#status-indicator {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    min-width: 150px;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease; /* Smooth color transitions */
+}
+
+#status-indicator.connected {
+    background-color: #28a745; /* Green */
+}
+
+#status-indicator.disconnected {
+    background-color: #dc3545; /* Red */
+}
+
+#status-indicator.reconnecting {
+    background-color: #ffc107; /* Yellow/Orange */
+    color: #333; /* Darker text for yellow */
+}
+
+#status-indicator.error {
+    background-color: #6c757d; /* Grey/Darker Red for severe errors */
+}
+
+/* Bookings List Container */
+#bookings-list {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 20px;
+    width: 100%;
+    max-width: 1500px; /* Max width for readability */
+    max-height: 70vh; /* Limit height to enable scrolling */
+    overflow-y: auto; /* Enable vertical scrolling */
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    gap: 10px; /* Space between booking items */
+}
+
+/* Scrollbar Styling (basic) */
+#bookings-list::-webkit-scrollbar {
+    width: 10px;
+}
+#bookings-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+#bookings-list::-webkit-scrollbar-thumb {
+    background: #888;
+}
+#bookings-list::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+
+/* Empty State Message */
+#empty-state-message {
+    text-align: center;
+    color: #777;
+    font-style: italic;
+    padding: 20px;
+}
+
+/* Individual Booking Item */
+.booking-item {
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column; /* Stack details vertically */
+    align-items: flex-start; /* Align text to the left */
+    gap: 8px; /* Space between paragraphs within a booking item */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05); /* Subtle shadow for depth */
+    transition: all 0.2s ease-in-out; /* Smooth transition for hover effects */
+}
+
+/* Highlight for the newest booking (first child) */
+.booking-item:first-child:not(.confirmed) { /* Apply only if not confirmed */
+    background-color: #e6f7ff; /* Lighter blue highlight */
+    border-left: 5px solid #007bff; /* Accent border */
+    animation: fadeInSlideDown 0.5s ease-out forwards; /* Apply animation */
+}
+
+/* Animation for new bookings */
+@keyframes fadeInSlideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px); /* Start slightly above */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0); /* End at normal position */
+    }
+}
+
+/* Hover effect for booking items */
+.booking-item:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* Slightly more pronounced shadow on hover */
+    transform: translateY(-2px); /* Subtle lift on hover */
+    background-color: #f0f8ff; /* Subtle background change on hover */
+}
+
+/* Styling for text within booking items */
+.booking-item p {
+    margin: 0;
+    font-size: 1.05em; /* Slightly larger text */
+    display: flex;
+    align-items: baseline; /* Align label and value side-by-side if enough space */
+    width: 100%;
+}
+
+.booking-item strong {
+    color: #0056b3;
+    min-width: 100px; /* Consistent width for labels */
+    display: inline-block;
+    flex-shrink: 0;
+    margin-right: 5px; /* Space between label and value */
+}
+
+.booking-item span {
+    color: #333;
+    font-weight: normal;
+    flex-grow: 1;
+}
+
+.booking-item small {
+    font-size: 0.8em;
+    color: #666;
+    align-self: flex-end;
+    margin-top: 5px;
+}
+
+/* NEW: Styles for Confirmed Booking State */
+.booking-item.confirmed {
+    background-color: #d4edda; /* Lighter green background for confirmed */
+    border-left: 5px solid #28a745; /* Green border */
+    opacity: 0.7; /* Slightly dim confirmed bookings */
+    transition: opacity 0.5s ease-out, background-color 0.3s ease; /* Smooth transition */
+}
+
+/* Optional: Override hover for confirmed items if you want */
+.booking-item.confirmed:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08); /* Less pronounced shadow on hover */
+    transform: none; /* No lift */
+    background-color: #d4edda; /* Keep same background */
+    cursor: default; /* Change cursor */
+}
+
+.confirm-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    margin-top: 10px; /* Space from booking details */
+    transition: background-color 0.2s ease-in-out;
+    align-self: flex-end; /* Align button to the right within the flex column */
+}
+
+.confirm-button:hover:not(:disabled) {
+    background-color: #0056b3;
+}
+
+.confirm-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.confirmed-status {
+    color: #28a745; /* Green text for confirmed status */
+    font-weight: bold;
+    margin-top: 10px;
+    font-size: 0.95em;
+    align-self: flex-end; /* Align status to the right */
+}
+
+/* Animation for confirmed items (when re-prepending them with 'confirmed-animation' class) */
+.booking-item.confirmed-animation {
+    animation: fadeInSlideDown 0.5s ease-out forwards, confirmedFadeIn 0.5s ease-out 0.5s forwards;
+}
+
+@keyframes confirmedFadeIn {
+    from { opacity: 0; }
+    to { opacity: 0.7; } /* Fade to dimmed state */
+}
+
+/* If a confirmed item becomes the first child, it should not get the initial new booking animation unless we want it to */
+.booking-item:first-child.confirmed {
+    animation: none; /* Override the new booking animation for confirmed items moved to top */
+}
